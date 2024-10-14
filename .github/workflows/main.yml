@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types: [opened, synchronize, reopened]  # This ensures it triggers on these actions
+    branches:
+      - main  # Adjust if you want to target different branches for PRs
   workflow_dispatch:
 
 jobs:
