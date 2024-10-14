@@ -1,0 +1,28 @@
+name: K6 test Build Runner
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  k6:
+    name: K6 test Build Runner
+    runs-on: ubuntu-latest
+    container:
+      image: golang:1.19-alpine
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install xk6
+        run: go install go.k6.io/xk6/cmd/xk6@latest
+
+      - name: Build xk6 with extensions
+        run: |
+          xk6 build --with github.com/szkiba/xk6-dotenv@latest \
+            --with github.com/avitalique/xk6-file@latest \
+            --replace go.buf.build/grpc/go/prometheus/prometheus=buf.build/gen/go/prometheus/prometheus/protocolbuffers/go@latest \
+            --replace go.buf.build/grpc/go/gogo/protobuf=buf.build/gen/go/gogo/protobuf/protocolbuffers/go@latest
