@@ -15,7 +15,7 @@ jobs:
     name: K6 test Build Runner
     runs-on: ubuntu-latest
     container:
-      image: golang:1.20-alpine
+      image: golang:1.22-alpine
 
     steps:
       - name: Checkout code
